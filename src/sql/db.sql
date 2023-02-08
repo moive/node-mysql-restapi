@@ -1,0 +1,12 @@
+CREATE BATABASE IF NOT EXISTS companydb;
+
+USE companydb;
+
+CREATE TABLE employee (
+  id INT(15) NOT NULL AUTO_INCREMENT,
+  name VARCHAR(50) DEFAULT NULL,
+  salary DECIMAL(10, 2) DEFAULT NULL,
+  PRIMARY KEY (id)
+);
+
+DESCRIBE employee;
