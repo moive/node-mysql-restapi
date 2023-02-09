@@ -28,7 +28,7 @@ export const createEmployee = async (
 };
 
 export const updateEmployee = (_req: Request, res: Response): Response => {
-  return res.send('put data');
+  return res.send('put data!');
 };
 
 export const deleteEmployee = (_req: Request, res: Response): Response => {
