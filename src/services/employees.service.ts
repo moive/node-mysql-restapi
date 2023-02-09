@@ -4,12 +4,17 @@ const createEmployeeService = async (
   name: string,
   salary: number
 ): Promise<any> => {
-  const [rows]: any = await pool.query(
+  const [row]: any = await pool.query(
     'INSERT INTO employee (name, salary) VALUES (?, ?)',
     [name, salary]
   );
 
+  return row;
+};
+
+const getEmployeesService = async (): Promise<any> => {
+  const [rows] = await pool.query('SELECT * FROM employee');
   return rows;
 };
 
-export { createEmployeeService };
+export { createEmployeeService, getEmployeesService };

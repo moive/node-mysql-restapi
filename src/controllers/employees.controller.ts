@@ -1,10 +1,21 @@
 import type { Request, Response } from 'express';
 import { handleHttp } from '../utils/error.handle';
 import type { IDataEmployee } from '../interfaces/employee.interface';
-import { createEmployeeService } from '../services/employees.service';
+import {
+  createEmployeeService,
+  getEmployeesService
+} from '../services/employees.service';
 
-export const getEmployees = (_req: Request, res: Response): Response => {
-  return res.send('get data');
+export const getEmployees = async (
+  _req: Request,
+  res: Response
+): Promise<Response> => {
+  try {
+    const result = await getEmployeesService();
+    return res.send({ ok: true, data: result });
+  } catch (e) {
+    return handleHttp(res, 'ERROR GET EMPLOYEES', e);
+  }
 };
 
 export const createEmployee = async (
@@ -23,7 +34,7 @@ export const createEmployee = async (
 
     return res.send({ ok: true, employee });
   } catch (e) {
-    return handleHttp(res, 'ERROR AUTH LOGIN FAILED', e);
+    return handleHttp(res, 'CONNECTION ERROR FAILED', e);
   }
 };
 
