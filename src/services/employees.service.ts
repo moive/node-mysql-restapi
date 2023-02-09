@@ -17,4 +17,9 @@ const getEmployeesService = async (): Promise<any> => {
   return rows;
 };
 
-export { createEmployeeService, getEmployeesService };
+const getEmployeeService = async (id: number): Promise<any> => {
+  const [row] = await pool.query('SELECT * FROM employee WHERE id = ?', [id]);
+  return row;
+};
+
+export { createEmployeeService, getEmployeesService, getEmployeeService };

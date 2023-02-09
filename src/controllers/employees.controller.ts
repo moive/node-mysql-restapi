@@ -3,6 +3,7 @@ import { handleHttp } from '../utils/error.handle';
 import type { IDataEmployee } from '../interfaces/employee.interface';
 import {
   createEmployeeService,
+  getEmployeeService,
   getEmployeesService
 } from '../services/employees.service';
 
@@ -15,6 +16,26 @@ export const getEmployees = async (
     return res.send({ ok: true, data: result });
   } catch (e) {
     return handleHttp(res, 'ERROR GET EMPLOYEES', e);
+  }
+};
+
+export const getEmployee = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
+  try {
+    const { id } = req.params;
+    const newVal = Number(id);
+    if (Number.isNaN(newVal)) {
+      return handleHttp(res, 'NOT FOUND', 'Id is not number', 404);
+    }
+    const result = await getEmployeeService(newVal);
+    if (result.length <= 0) {
+      return handleHttp(res, 'NOT FOUND', 'Empty', 404);
+    }
+    return res.send({ ok: true, data: result });
+  } catch (e) {
+    return handleHttp(res, 'ERROR GET EMPLOYEE', e);
   }
 };
 
