@@ -3,6 +3,7 @@ import { handleHttp } from '../utils/error.handle';
 import type { IDataEmployee } from '../interfaces/employee.interface';
 import {
   createEmployeeService,
+  deleteEmployeeService,
   getEmployeeService,
   getEmployeesService
 } from '../services/employees.service';
@@ -63,6 +64,25 @@ export const updateEmployee = (_req: Request, res: Response): Response => {
   return res.send('put data!');
 };
 
-export const deleteEmployee = (_req: Request, res: Response): Response => {
-  return res.send('delete data');
+export const deleteEmployee = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
+  try {
+    const { id } = req.params;
+    const newVal = Number(id);
+
+    if (Number.isNaN(newVal)) {
+      return handleHttp(res, 'NOT FOUND', 'Employee not found', 404);
+    }
+    const result = await deleteEmployeeService(newVal);
+
+    if (result.affectedRows <= 0) {
+      return handleHttp(res, 'NOT FOUND', 'Employee not found', 404);
+    }
+
+    return res.sendStatus(204);
+  } catch (e) {
+    return handleHttp(res, 'ERROR DELETE EMPLOYEE', e);
+  }
 };

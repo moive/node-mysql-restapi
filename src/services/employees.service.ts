@@ -22,4 +22,14 @@ const getEmployeeService = async (id: number): Promise<any> => {
   return row;
 };
 
-export { createEmployeeService, getEmployeesService, getEmployeeService };
+const deleteEmployeeService = async (id: number): Promise<any> => {
+  const [row] = await pool.query('DELETE FROM employee WHERE id = ?', [id]);
+  return row;
+};
+
+export {
+  createEmployeeService,
+  getEmployeesService,
+  getEmployeeService,
+  deleteEmployeeService
+};
