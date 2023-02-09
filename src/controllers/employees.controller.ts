@@ -1,10 +1,23 @@
 import { Request, Response } from 'express';
+import { createEmployeeService } from '../services/employees.service';
 
 export const getEmployees = (_req: Request, res: Response) => {
   return res.send('get data');
 };
 
-export const createEmployee = (_req: Request, res: Response) => {
+export const createEmployee = async (req: Request, res: Response) => {
+  try {
+    const { name, salary } = req.body;
+    const result: any = await createEmployeeService(name, salary);
+    console.log(result);
+    return res.send({
+      id: result.insertId,
+      name,
+      salary
+    });
+  } catch (e) {
+    console.log(e);
+  }
   return res.send('post data');
 };
 
