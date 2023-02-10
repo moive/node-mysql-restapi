@@ -5,7 +5,8 @@ import {
   createEmployeeService,
   deleteEmployeeService,
   getEmployeeService,
-  getEmployeesService
+  getEmployeesService,
+  updateEmployeeService
 } from '../services/employees.service';
 
 export const getEmployees = async (
@@ -60,8 +61,34 @@ export const createEmployee = async (
   }
 };
 
-export const updateEmployee = (_req: Request, res: Response): Response => {
-  return res.send('put data!');
+export const updateEmployee = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
+  try {
+    const { id } = req.params;
+    const { name, salary } = req.body;
+    const newVal = Number(id);
+
+    if (Number.isNaN(newVal))
+      return handleHttp(res, 'NOT FOUND', 'Id is a not a number', 404);
+
+    const resUpdate = await updateEmployeeService(newVal, name, salary);
+
+    if (resUpdate.affectedRows === 0)
+      return handleHttp(
+        res,
+        'NOT FOUND',
+        `Id_employee: ${id} is not exist`,
+        404
+      );
+
+    const [response] = await getEmployeeService(newVal);
+
+    return res.send({ ok: true, data: response });
+  } catch (e) {
+    return handleHttp(res, 'ERROR DELETE EMPLOYEE', e);
+  }
 };
 
 export const deleteEmployee = async (

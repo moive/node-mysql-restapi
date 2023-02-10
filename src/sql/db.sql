@@ -18,3 +18,6 @@ INSERT INTO employee VALUES
 (4, 'Max', 1500);
 
 SELECT * FROM employee WHERE id=2;
+
+
+UPDATE employee SET name = 'John', salary = 2300 WHERE id = 3;

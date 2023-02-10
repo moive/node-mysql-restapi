@@ -27,9 +27,23 @@ const deleteEmployeeService = async (id: number): Promise<any> => {
   return row;
 };
 
+const updateEmployeeService = async (
+  id: number,
+  name: string,
+  salary: number
+): Promise<any> => {
+  const [result] = await pool.query(
+    'UPDATE employee SET name = ?, salary = ? WHERE id = ?',
+    [name, salary, id]
+  );
+  console.log('result:', result);
+  return result;
+};
+
 export {
   createEmployeeService,
   getEmployeesService,
   getEmployeeService,
-  deleteEmployeeService
+  deleteEmployeeService,
+  updateEmployeeService
 };
