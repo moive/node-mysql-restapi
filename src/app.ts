@@ -12,6 +12,9 @@ app.use(express.json());
 // Routes
 app.use(indexRouter);
 app.use('/api/employees', employeesRouter);
+app.use((_req, res, _next) => {
+  res.status(404).json({ message: 'Endpoint not found.' });
+});
 
 export default app;
 // https://www.youtube.com/watch?v=3dSkc-DIM74
