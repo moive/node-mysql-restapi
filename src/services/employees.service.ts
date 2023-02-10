@@ -33,7 +33,7 @@ const updateEmployeeService = async (
   salary: number
 ): Promise<any> => {
   const [result] = await pool.query(
-    'UPDATE employee SET name = ?, salary = ? WHERE id = ?',
+    'UPDATE employee SET name = IFNULL(?, name), salary = IFNULL(?, salary) WHERE id = ?',
     [name, salary, id]
   );
   console.log('result:', result);
